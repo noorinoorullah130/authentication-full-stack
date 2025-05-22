@@ -29,6 +29,16 @@ const login = (req, res) => {
         if (!isMatch)
             return res.status(401).json({ message: "Password is incorrect!" });
 
-        const token = 
+        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+            expiresIn: "1h",
+        });
+
+        res.json({ token, username: user.username });
     });
 };
+
+const dashboard = (req, res) => {
+    res.json({ message: "Welcome to your dashboard!" });
+};
+
+export { register, login, dashboard };
