@@ -1,21 +1,30 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
 function Register() {
-    const navigate = useNavigate();
+    const [form, setForm] = useState({ username: "", password: "" });
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await axios.post("http://localhost:5000/api/auth/register", form);
+        alert("Registered successfully");
+    };
 
     return (
-        <div className="auth-form">
-            <form>
-                <h2>Register</h2>
-                <input type="text" placeholder="Username" />
-                <input type="password" placeholder="Password" />
-                <button type="submit">Register</button>
-            </form>
-            <p className="navigation" onClick={() => navigate("/login")}>
-                Login
-            </p>
-        </div>
+        <form className="auth-form" onSubmit={handleSubmit}>
+            <h2>Register</h2>
+            <input
+                type="text"
+                placeholder="Username"
+                onChange={(e) => setForm({ ...form, username: e.target.value })}
+            />
+            <input
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+            />
+            <button type="submit">Register</button>
+        </form>
     );
 }
 

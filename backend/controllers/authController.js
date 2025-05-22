@@ -6,7 +6,7 @@ const register = (req, res) => {
     const { username, password } = req.body;
     const hash = bcrypt.hashSync(password, 10);
 
-    const sql = "INSERT INTO user (username, password) VALUES(?, ?, ?";
+    const sql = "INSERT INTO user (username, password) VALUES(?, ?)";
 
     db.query(sql, [username, hash], (err, result) => {
         if (err) return res.status(500).json(err);
